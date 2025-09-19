@@ -6,6 +6,26 @@
 
 荧惑社工仿站是一个功能全面的移动端渗透测试平台，提供网站仿制、用户数据捕获、内网穿透等核心功能，帮助安全研究人员进行合法的渗透测试和安全评估工作。
 
+
+### 界面展示
+<details>
+  <summary>📱 点我查看界面截图（共 6 张）</summary>
+
+  | 主控制台 | 仿站管理 |
+  | :---: | :---: |
+  | ![dashboard](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193251_149_163.jpg) | ![site](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193252_150_163.jpg) |
+
+  | 数据捕获 | 隧道配置 |
+  | :---: | :---: |
+  | ![capture](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193253_151_163.jpg) | ![tunnel](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193254_152_163.jpg) |
+
+  | 数据捕获 | 隧道配置 |
+  | :---: | :---: |
+  | ![settings](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193255_153_163.jpg)
+
+</details>
+
+
 ### 🌟 核心特性
 
 #### 🎯 网站仿制功能
