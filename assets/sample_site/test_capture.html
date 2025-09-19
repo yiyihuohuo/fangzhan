@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据捕获测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .hidden-fields {
+            display: none;
+        }
+        .test-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="test-info">
+            <h3>数据捕获测试说明</h3>
+            <p>此页面用于测试优化后的数据捕获系统。系统应该只捕获有价值的用户输入，过滤掉隐藏字段和无用数据。</p>
+        </div>
+
+        <h2>用户登录表单</h2>
+        <form id="loginForm">
+            <!-- 有价值的用户输入 -->
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" id="username" name="username" placeholder="请输入用户名">
+            </div>
+
+            <div class="form-group">
+                <label for="password">密码:</label>
+                <input type="password" id="password" name="password" placeholder="请输入密码">
+            </div>
+
+            <div class="form-group">
+                <label for="email">邮箱:</label>
+                <input type="email" id="email" name="email" placeholder="请输入邮箱地址">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">手机号:</label>
+                <input type="text" id="phone" name="phone" placeholder="请输入手机号">
+            </div>
+
+            <div class="form-group">
+                <label for="comments">备注:</label>
+                <textarea id="comments" name="comments" rows="3" placeholder="请输入备注信息"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="country">国家:</label>
+                <select id="country" name="country">
+                    <option value="">请选择</option>
+                    <option value="china">中国</option>
+                    <option value="usa">美国</option>
+                    <option value="japan">日本</option>
+                </select>
+            </div>
+
+            <!-- 应该被过滤的隐藏字段和无用数据 -->
+            <div class="hidden-fields">
+                <input type="hidden" name="lenovoid.path" value="/login">
+                <input type="hidden" name="crossRealmDomains" value="null">
+                <input type="hidden" name="unnamed_token" value="">
+                <input type="hidden" name="system_error" value="您的信息输入错误，请重新输入">
+                <input type="hidden" name="page_title" value="登录页面标题信息">
+                <input type="hidden" name="csrf_token" value="abc123def456">
+                <input type="hidden" name="session_id" value="">
+                <input type="hidden" name="tracking_id" value="null">
+            </div>
+
+            <button type="submit" onclick="handleLogin(event)">登录</button>
+            <button type="button" onclick="handleRegister()">注册</button>
+            <button type="reset">重置</button>
+        </form>
+
+        <div id="result" style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 4px; display: none;">
+            <h4>捕获结果预览:</h4>
+            <pre id="capturedData"></pre>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            console.log('登录按钮被点击');
+            
+            // 模拟表单提交
+            setTimeout(() => {
+                showResult('登录请求已发送');
+            }, 500);
+        }
+
+        function handleRegister() {
+            console.log('注册按钮被点击');
+            showResult('跳转到注册页面');
+        }
+
+        function showResult(message) {
+            const resultDiv = document.getElementById('result');
+            const capturedDiv = document.getElementById('capturedData');
+            
+            capturedDiv.textContent = message + '\n时间: ' + new Date().toLocaleString();
+            resultDiv.style.display = 'block';
+        }
+
+        // 模拟一些动态添加的无用字段
+        setTimeout(() => {
+            const form = document.getElementById('loginForm');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'dynamic_junk';
+            hiddenInput.value = 'null';
+            form.appendChild(hiddenInput);
+        }, 2000);
+
+        // 添加一些测试用的输入事件
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('测试页面加载完成');
+            
+            // 模拟用户输入
+            setTimeout(() => {
+                document.getElementById('username').value = 'testuser';
+                document.getElementById('username').dispatchEvent(new Event('input', { bubbles: true }));
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     DashboardScreen(),
     SiteManagementScreen(),
     DataCaptureScreen(),
-    const ConfigManagerScreen(),
+    ConfigManagerScreen(),
     SettingsScreen(),
   ];
 

