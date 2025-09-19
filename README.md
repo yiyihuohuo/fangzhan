@@ -19,8 +19,8 @@
   | :---: | :---: |
   | ![capture](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193253_151_163.jpg) | ![tunnel](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193254_152_163.jpg) |
 
-  | 数据捕获 | 隧道配置 |
-  | :---: | :---: |
+  | 数据捕获 | 
+  | :---: | 
   | ![settings](https://raw.githubusercontent.com/yiyihuohuo/fangzhan/refs/heads/main/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250919193255_153_163.jpg)
 
 </details>
