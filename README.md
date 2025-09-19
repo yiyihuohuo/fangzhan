@@ -1,202 +1,270 @@
-# 社工防站 (shegongfangzhan)
+# 荧惑社工仿站 (shegongfangzhan)
 
-一个基于Flutter开发的内网穿透工具，集成了FRP（Fast Reverse Proxy）功能，支持HTTP、HTTPS、TCP等多种协议的内网穿透服务。
+一个基于Flutter开发的综合性渗透测试工具，集成了网站克隆、数据捕获、内网穿透等功能，专为安全研究和渗透测试而设计。
 
 ## 📱 项目简介
 
-社工防站是一个功能强大的移动端内网穿透应用，旨在帮助用户轻松地将本地服务暴露到公网，支持多种隧道类型和灵活的配置管理。
+荧惑社工仿站是一个功能全面的移动端渗透测试平台，提供网站仿制、用户数据捕获、内网穿透等核心功能，帮助安全研究人员进行合法的渗透测试和安全评估工作。
 
-### 🌟 主要特性
+### 🌟 核心特性
 
-- **多协议支持**: 支持HTTP、HTTPS、TCP、UDP等多种协议
-- **隧道管理**: 完整的隧道创建、编辑、删除和状态监控
-- **实时通知**: 集成本地通知服务，实时反馈隧道状态
+#### 🎯 网站仿制功能
+- **智能克隆**: 自动下载并重构目标网站的完整结构
+- **资源处理**: 智能处理CSS、JS、图片等静态资源
+- **链接重写**: 自动修正相对路径和绝对路径
+- **代理注入**: 无缝集成数据捕获代码
+
+#### 📊 数据捕获系统
+- **全方位监控**: 捕获表单提交、网络请求、用户输入等所有交互数据
+- **实时捕获**: 支持实时输入监控和表单快照
+- **智能过滤**: 自动过滤无用数据，只保留有价值的信息
+- **多格式支持**: 支持POST、GET、PROBE等多种数据类型分类
+- **数据导出**: 支持JSON格式数据导出和分析
+
+#### 🔗 内网穿透服务
+- **FRP集成**: 内置Fast Reverse Proxy客户端
+- **多协议支持**: 支持HTTP、HTTPS、TCP等多种协议
 - **配置管理**: 灵活的服务器配置和隧道参数设置
 - **状态监控**: 实时显示隧道连接状态和流量信息
-- **本地测试**: 内置示例网站用于测试隧道功能
-- **数据持久化**: 使用SQLite本地存储配置和历史记录
 
-## 🏗️ 项目结构
+#### 🕵️ 探针功能
+- **GPS定位**: 获取目标设备地理位置信息
+- **设备信息**: 收集设备硬件和系统信息
+- **剪贴板监控**: 监控剪贴板内容变化
+- **摄像头检测**: 检测设备摄像头权限状态
+
+## 🏗️ 项目架构
 
 ```
 lib/
-├── main.dart                    # 应用入口
-├── providers/                   # 状态管理
-│   ├── tunnel_provider.dart    # 隧道状态管理
-│   └── settings_provider.dart  # 设置状态管理
-├── screens/                     # 界面页面
-│   ├── home_screen.dart        # 主页面
-│   ├── tunnel_management_screen.dart  # 隧道管理页面
-│   ├── settings_screen.dart    # 设置页面
-│   └── tunnel_detail_screen.dart      # 隧道详情页面
-├── services/                    # 核心服务
-│   ├── frp_service.dart        # FRP服务核心
-│   ├── notification_service.dart      # 通知服务
-│   ├── database_service.dart   # 数据库服务
-│   └── file_service.dart       # 文件管理服务
-└── theme/                       # 主题配置
-    └── app_theme.dart          # 应用主题
+├── main.dart                           # 应用入口
+├── providers/                          # 状态管理
+│   └── app_provider.dart              # 全局应用状态
+├── screens/                            # 用户界面
+│   ├── dashboard_screen.dart          # 主控制台
+│   ├── site_management_screen.dart    # 仿站管理界面
+│   ├── data_capture_screen.dart       # 数据捕获界面
+│   ├── data_detail_screen.dart        # 数据详情查看
+│   ├── config_manager_screen.dart     # 配置管理界面
+│   ├── config_editor_screen.dart      # 配置编辑器
+│   ├── tunneling_config_screen.dart   # 隧道配置界面
+│   ├── web_test_screen.dart           # 网页测试界面
+│   └── settings_screen.dart           # 系统设置
+├── services/                           # 核心服务层
+│   ├── site_service.dart              # 网站克隆服务
+│   ├── capture_service.dart           # 数据捕获服务
+│   ├── server_service.dart            # HTTP服务器
+│   ├── tunnel_service.dart            # 内网穿透服务
+│   ├── frp_config_service.dart        # FRP配置管理
+│   ├── universal_capture_injector.dart # 通用数据捕获注入器
+│   ├── database_helper.dart           # 数据库操作
+│   ├── config_file_service.dart       # 配置文件管理
+│   └── notification_service.dart      # 通知服务
+└── theme/                              # 主题配置
+    └── app_theme.dart                 # 应用主题
 
 assets/
-├── ngrok/                      # Ngrok相关资源
-├── sample_site/                # 示例网站文件
-│   ├── index.html             # 测试页面
-│   ├── style.css              # 样式文件
-│   └── script.js              # 脚本文件
-└── frpc_native/               # FRP客户端原生文件
+├── sample_site/                        # 示例网站
+│   ├── index.html                     # 测试登录页面
+│   └── test_capture.html              # 数据捕获测试页面
+├── ngrok/                             # Ngrok原生库
+│   └── android/                       # Android平台库文件
+└── frp.ini                            # FRP配置模板
 
-android/                        # Android平台配置
-├── app/
-│   └── src/main/AndroidManifest.xml  # Android权限配置
-└── frpc_native/               # 原生FRP客户端
+android/                                # Android平台配置
+└── frpc_native/                       # 原生FRP客户端
 ```
 
-## 🚀 功能模块
+## 🚀 功能模块详解
 
-### 1. 隧道管理
-- **创建隧道**: 支持多种协议类型的隧道创建
-- **编辑配置**: 灵活修改隧道参数
-- **状态监控**: 实时显示隧道连接状态
-- **批量操作**: 支持批量启动/停止隧道
+### 1. 网站仿制系统
+- **目标分析**: 自动分析目标网站结构和资源依赖
+- **内容下载**: 批量下载HTML、CSS、JS、图片等资源
+- **路径重写**: 智能处理相对路径和绝对路径转换
+- **代码注入**: 无缝注入数据捕获和探针代码
+- **本地服务**: 提供HTTP/HTTPS本地服务器
 
-### 2. 服务器配置
-- **多服务器支持**: 管理多个FRP服务器配置
-- **连接测试**: 验证服务器连接状态
-- **配置导入/导出**: 支持配置文件的导入导出
+### 2. 数据捕获引擎
+- **表单监控**: 实时监控所有表单提交行为
+- **输入捕获**: 捕获用户在输入框中的实时输入
+- **网络拦截**: 拦截并记录所有AJAX/Fetch请求
+- **点击追踪**: 记录用户的点击行为和交互路径
+- **智能过滤**: 过滤系统字段和无价值数据
 
-### 3. 通知系统
-- **状态通知**: 隧道状态变化实时通知
-- **错误提醒**: 连接异常及时提醒
-- **后台运行**: 支持后台状态监控
+### 3. 内网穿透管理
+- **服务器配置**: 管理多个FRP服务器配置
+- **隧道创建**: 支持多种协议的隧道创建
+- **状态监控**: 实时监控隧道连接状态
+- **日志记录**: 详细的连接日志和错误信息
 
-### 4. 本地测试
-- **示例网站**: 内置测试网站用于验证隧道功能
-- **端口检测**: 自动检测可用端口
-- **连接验证**: 一键测试隧道连通性
+### 4. 探针系统
+- **地理定位**: 获取设备GPS坐标信息
+- **设备指纹**: 收集设备硬件和浏览器信息
+- **权限检测**: 检测各种敏感权限状态
+- **环境分析**: 分析目标网络环境信息
 
-## 📦 依赖包
+## 📦 技术栈
 
-主要使用的Flutter包：
+### 核心框架
+- **Flutter**: 3.8+ 跨平台移动应用框架
+- **Dart**: 3.0+ 编程语言
+- **Provider**: 状态管理解决方案
 
+### 主要依赖
 ```yaml
 dependencies:
   flutter: sdk: flutter
-  provider: ^6.1.2              # 状态管理
-  sqflite: ^2.3.3              # 本地数据库
-  shared_preferences: ^2.2.3    # 本地存储
-  flutter_local_notifications: ^17.2.2  # 本地通知
-  path_provider: ^2.1.3         # 路径管理
-  file_picker: ^8.1.2           # 文件选择
-  url_launcher: ^6.3.0          # URL启动
-  webview_flutter: ^4.8.0       # WebView组件
+  provider: ^6.1.2                    # 状态管理
+  dio: ^5.4.0                         # HTTP客户端
+  sqflite: ^2.3.0                     # 本地数据库
+  webview_flutter: ^4.4.1             # WebView组件
+  shared_preferences: ^2.2.2          # 本地存储
+  path_provider: ^2.1.1               # 路径管理
+  flutter_local_notifications: ^17.2.2 # 本地通知
+  file_picker: ^10.2.0                # 文件选择器
+  url_launcher: ^6.2.6                # URL启动器
+  html: ^0.15.4                       # HTML解析
+  crypto: ^3.0.3                      # 加密算法
+  uuid: ^4.3.3                        # UUID生成
+  mime: ^1.0.4                        # MIME类型处理
+  basic_utils: ^5.8.2                 # 基础工具
+  toml: ^0.16.0                       # TOML配置解析
 ```
 
-## 🛠️ 开发环境
+## 🛠️ 开发环境要求
 
-- **Flutter**: 3.0+
-- **Dart**: 3.0+
-- **Android**: API 21+ (Android 5.0+)
-- **iOS**: iOS 12.0+
+- **Flutter SDK**: 3.8.0 或更高版本
+- **Dart SDK**: 3.0.0 或更高版本
+- **Android Studio**: 2022.1 或更高版本
+- **Android API**: 21+ (Android 5.0+)
+- **iOS**: 12.0+ (如需iOS支持)
 
-## 📱 安装与运行
+## 📱 安装与部署
 
 ### 1. 环境准备
 ```bash
 # 检查Flutter环境
 flutter doctor
 
-# 获取依赖
+# 克隆项目
+git clone <repository-url>
+cd shegongfangzhan
+
+# 安装依赖
 flutter pub get
 ```
 
-### 2. 运行应用
+### 2. 编译运行
 ```bash
 # 调试模式运行
 flutter run
 
-# 发布模式构建
+# 发布版本构建
 flutter build apk --release
+
+# 生成签名APK
+flutter build apk --release --split-per-abi
 ```
 
-### 3. 原生组件编译
+### 3. 原生组件配置
 ```bash
-# 编译Android原生FRP客户端
+# 配置Android原生FRP客户端
 cd android/frpc_native
-./build.sh
+# 根据需要配置原生库文件
 ```
 
 ## ⚙️ 配置说明
 
 ### FRP服务器配置
-```json
-{
-  "server_addr": "your-server.com",
-  "server_port": 7000,
-  "token": "your-token",
-  "user": "your-username"
-}
+```toml
+[common]
+server_addr = "your-server.com"
+server_port = 7000
+token = "your-token"
+user = "your-username"
+
+[web]
+type = "http"
+local_ip = "127.0.0.1"
+local_port = 8080
+custom_domains = ["your-domain.com"]
 ```
 
-### 隧道配置示例
-```json
-{
-  "name": "web-tunnel",
-  "type": "http",
-  "local_ip": "127.0.0.1",
-  "local_port": 8080,
-  "custom_domains": ["your-domain.com"],
-  "subdomain": "test"
-}
-```
+### 数据捕获配置
+- **捕获类型**: POST、GET、PROBE
+- **过滤规则**: 自动过滤系统字段和无用数据
+- **存储格式**: JSON格式本地存储
+- **导出功能**: 支持数据导出和分析
 
-## 🔧 权限说明
+## 🔒 安全特性
 
-应用需要以下权限：
-- **网络访问**: 用于建立隧道连接
-- **存储权限**: 用于保存配置文件
-- **通知权限**: 用于状态通知
-- **前台服务**: 用于后台运行隧道服务
+- **数据加密**: 敏感数据本地加密存储
+- **权限控制**: 严格的权限申请和使用控制
+- **日志记录**: 详细的操作日志和审计跟踪
+- **安全通信**: 支持HTTPS和加密隧道
 
 ## 📋 使用指南
 
-1. **首次使用**: 配置FRP服务器信息
-2. **创建隧道**: 选择协议类型，配置本地服务
-3. **启动服务**: 一键启动隧道连接
-4. **状态监控**: 查看连接状态和流量信息
-5. **测试验证**: 使用内置测试工具验证连通性
+### 基础使用流程
+1. **配置服务器**: 设置FRP服务器连接信息
+2. **创建仿站**: 输入目标URL，自动克隆网站
+3. **启动服务**: 启动本地HTTP服务器
+4. **配置隧道**: 创建内网穿透隧道
+5. **监控数据**: 实时查看捕获的用户数据
+6. **分析结果**: 导出和分析收集的数据
+
+### 高级功能
+- **批量仿站**: 支持批量克隆多个网站
+- **自定义探针**: 配置特定的数据收集规则
+- **数据过滤**: 设置智能数据过滤规则
+- **实时监控**: 实时监控目标用户行为
+
+## ⚠️ 法律声明
+
+**重要提醒**: 本工具仅供合法的安全研究和渗透测试使用。使用者必须：
+
+1. **获得授权**: 仅在获得明确书面授权的系统上使用
+2. **遵守法律**: 严格遵守当地法律法规
+3. **负责任使用**: 不得用于非法活动或恶意攻击
+4. **保护隐私**: 妥善处理和保护收集的数据
+5. **教育目的**: 优先用于安全教育和防护改进
+
+使用本工具即表示您同意承担相应的法律责任。开发者不对任何滥用行为承担责任。
 
 ## 🐛 常见问题
 
+### Q: 网站克隆失败？
+A: 检查目标网站的反爬虫机制，尝试调整请求头和访问频率。
+
+### Q: 数据捕获不完整？
+A: 确认JavaScript注入是否成功，检查目标网站的CSP策略。
+
 ### Q: 隧道连接失败？
-A: 检查服务器配置和网络连接，确认防火墙设置。
+A: 验证FRP服务器配置，检查网络连接和防火墙设置。
 
-### Q: 通知不显示？
-A: 检查应用通知权限，确保已开启通知功能。
-
-### Q: 后台运行异常？
-A: 检查电池优化设置，将应用加入白名单。
+### Q: 应用崩溃或异常？
+A: 查看日志文件，检查设备权限和存储空间。
 
 ## 🤝 贡献指南
 
-欢迎提交Issue和Pull Request来改进项目：
+欢迎安全研究人员和开发者贡献代码：
 
-1. Fork项目
-2. 创建功能分支
-3. 提交更改
-4. 推送到分支
+1. Fork项目仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 创建Pull Request
 
 ## 📄 许可证
 
-本项目采用MIT许可证 - 查看[LICENSE](LICENSE)文件了解详情。
+本项目采用MIT许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 📞 联系方式
 
-如有问题或建议，请通过以下方式联系：
-- 提交Issue
-- 发送邮件
-- 加入讨论群
+- **Issues**: 通过GitHub Issues报告问题
+- **讨论**: 参与GitHub Discussions
+- **安全问题**: 请通过私有渠道报告安全漏洞
 
 ---
 
-**注意**: 请确保遵守相关法律法规，合理使用内网穿透功能。
+**免责声明**: 本工具仅用于合法的安全测试目的。使用者需自行承担使用风险和法律责任。请在使用前仔细阅读相关法律法规，确保合规使用。
