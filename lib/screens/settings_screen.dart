@@ -117,9 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             title:const Text('频道'),
             trailing: const Icon(Icons.telegram),
-            onTap: () => _launchUrl('http://127.0.0.1/'),
-            //因为写完我写完就放弃了这个项目，导致我连频道都没有做
-            //二改的时候可以改成你自己的频道，记得表明原作者
+            onTap: () => _launchUrl('http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ZRMk-IHokZDRywCgEn7K_s4ZU6LSLuJF&authKey=k1H%2BNt9de8ZWGcgtCQCyQT%2FsJKCAafD0%2Fu1zjmxCXtOdUQx1GR3Oz9loqK8PlJL6&noverify=0&group_code=1026163188'),
           ),
           ListTile(
             title:const Text('github地址'),
